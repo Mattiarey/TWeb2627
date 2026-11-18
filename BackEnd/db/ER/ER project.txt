@@ -3,7 +3,9 @@ entity HOTEL {
     id_hotel (id),
     nome,
     indirizzo,
-    distanza
+    distanza,
+    telefono (optional),
+    email (optional)
 }
 entity SQUADRA {
     id_squadra (id),
@@ -13,9 +15,13 @@ entity SOCIETA {
     id_societa (id),
     nome,
     regione_provenienza (optional),
-    nazione (optional)
+    nazione_provenienza (optional),
+    email_referente (optional),
+    telefono_referente (optional)
 }
-entity GIOCATORE
+entity GIOCATORE {
+    data_nascita
+}
 entity STANZA {
     numero,
     posti_letto,
@@ -27,24 +33,31 @@ entity PERSONA {
     cognome
 }
 entity GENITORE {
-    con_figlio
+    con_figlio,
+    grado_parentela
 }
 entity TORNEO {
     id_torneo (id),
     nome,
     data_inizio,
-    data_fine
+    data_fine,
+    luogo
 }
 entity TARIFFA {
     costo,
-    descrizione
+    descrizione,
+    id_tariffa (id)
 }
 entity CATEGORIA {
-    nome (id),
-    formato_gioco
+    id_categoria (id),
+    formato_gioco,
+    tipo_categoria
 }
 entity ISCRIZIONE {
-    id_iscrizione (id)
+    id_iscrizione (id),
+    data_iscrizione,
+    stato,
+    note (optional)
 }
 
 /* Relationships */
@@ -70,7 +83,7 @@ relationship OCCUPARE (
 }
 relationship PROPORRE (
     TORNEO: one..many,
-    TARIFFA: one..one external
+    TARIFFA: one..one
 )
 relationship SCEGLIERE (
     GIOCATORE: one..many,
