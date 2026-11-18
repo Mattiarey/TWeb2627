@@ -1,0 +1,35 @@
+<h3>Relational logical schema</h3>HOTEL (<u  style="text-decoration: underline;">id_hotel</u>, nome, indirizzo, distanza, telefono*, email*)<br><br>
+SOCIETA (<u  style="text-decoration: underline;">id_societa</u>, nome, regione_provenienza*, nazione_provenienza*, email_referente*, telefono_referente*)<br><br>
+GIOCATORE (<u  style="text-decoration: underline;">id_persona</u>, data_nascita, nome, cognome)<br><br>
+STANZA (<u  style="text-decoration: underline;">id_stanza</u>, numero, posti_letto)<br><br>
+GENITORE (<u  style="text-decoration: underline;">id_persona</u>, con_figlio, grado_parentela, nome, cognome)<br><br>
+TORNEO (<u  style="text-decoration: underline;">id_torneo</u>, nome, data_inizio, data_fine, luogo)<br><br>
+CATEGORIA (<u  style="text-decoration: underline;">id_categoria</u>, formato_gioco, tipo_categoria)<br><br>
+SQUADRA (<u  style="text-decoration: underline;">id_squadra</u>, nome, SOCIETA_id_societa, CATEGORIA_id_categoria)<br><br>
+TARIFFA (<u  style="text-decoration: underline;">id_tariffa</u>, costo, descrizione, TORNEO_id_torneo)<br><br>
+ISCRIZIONE (<u  style="text-decoration: underline;">id_iscrizione</u>, data_iscrizione, stato, note*, TORNEO_id_torneo, SQUADRA_id_squadra)<br><br>
+AVERE (<u  style="text-decoration: underline;">SQUADRA_id_squadra</u>, <u  style="text-decoration: underline;">GIOCATORE_id_persona</u>)<br><br>
+FORNIRE (<u  style="text-decoration: underline;">HOTEL_id_hotel</u>, <u  style="text-decoration: underline;">STANZA_id_stanza</u>, <u  style="text-decoration: underline;">TORNEO_id_torneo</u>)<br><br>
+SCEGLIERE (<u  style="text-decoration: underline;">GIOCATORE_id_persona</u>, <u  style="text-decoration: underline;">TARIFFA_id_tariffa</u>)<br><br>
+RISERVARE (<u  style="text-decoration: underline;">STANZA_id_stanza</u>, <u  style="text-decoration: underline;">ISCRIZIONE_id_iscrizione</u>)<br><br>
+COMPORRE (<u  style="text-decoration: underline;">GIOCATORE_id_persona</u>, <u  style="text-decoration: underline;">ISCRIZIONE_id_iscrizione</u>)<br><br>
+OCCUPARE_GIOCATORE (<u  style="text-decoration: underline;">GIOCATORE_id_persona</u>, <u  style="text-decoration: underline;">STANZA_id_stanza</u>)<br><br>
+OCCUPARE_GENITORE (<u  style="text-decoration: underline;">STANZA_id_stanza</u>, <u  style="text-decoration: underline;">GENITORE_id_persona</u>)<br><br>
+
+<br><h3>Referential integrity constraints</h3>
+
+
+
+
+
+
+SQUADRA (SOCIETA_id_societa)  REFERENCES SOCIETA  (id_societa)<br><br>SQUADRA (CATEGORIA_id_categoria)  REFERENCES CATEGORIA  (id_categoria)<br><br>
+TARIFFA (TORNEO_id_torneo)  REFERENCES TORNEO  (id_torneo)<br><br>
+ISCRIZIONE (TORNEO_id_torneo)  REFERENCES TORNEO  (id_torneo)<br><br>ISCRIZIONE (SQUADRA_id_squadra)  REFERENCES SQUADRA  (id_squadra)<br><br>
+AVERE (SQUADRA_id_squadra)  REFERENCES SQUADRA  (id_squadra)<br><br>AVERE (GIOCATORE_id_persona)  REFERENCES GIOCATORE  (id_persona)<br><br>
+FORNIRE (HOTEL_id_hotel)  REFERENCES HOTEL  (id_hotel)<br><br>FORNIRE (STANZA_id_stanza)  REFERENCES STANZA  (id_stanza)<br><br>FORNIRE (TORNEO_id_torneo)  REFERENCES TORNEO  (id_torneo)<br><br>
+SCEGLIERE (GIOCATORE_id_persona)  REFERENCES GIOCATORE  (id_persona)<br><br>SCEGLIERE (TARIFFA_id_tariffa)  REFERENCES TARIFFA  (id_tariffa)<br><br>
+RISERVARE (STANZA_id_stanza)  REFERENCES STANZA  (id_stanza)<br><br>RISERVARE (ISCRIZIONE_id_iscrizione)  REFERENCES ISCRIZIONE  (id_iscrizione)<br><br>
+COMPORRE (GIOCATORE_id_persona)  REFERENCES GIOCATORE  (id_persona)<br><br>COMPORRE (ISCRIZIONE_id_iscrizione)  REFERENCES ISCRIZIONE  (id_iscrizione)<br><br>
+OCCUPARE_GIOCATORE (GIOCATORE_id_persona)  REFERENCES GIOCATORE  (id_persona)<br><br>OCCUPARE_GIOCATORE (STANZA_id_stanza)  REFERENCES STANZA  (id_stanza)<br><br>
+OCCUPARE_GENITORE (STANZA_id_stanza)  REFERENCES STANZA  (id_stanza)<br><br>OCCUPARE_GENITORE (GENITORE_id_persona)  REFERENCES GENITORE  (id_persona)<br><br>
