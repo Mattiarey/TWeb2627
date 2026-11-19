@@ -1,0 +1,5 @@
+Un giocatore può prendere una sola tariffa per anno
+
+Un giocatore paga la tariffa anche per il genitore
+
+Ogni anno vanno modificati i giocatori di una squadra. Non ha senso ricreare la squadra cas
