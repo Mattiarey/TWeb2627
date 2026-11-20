@@ -1,0 +1,139 @@
+/* Entities */
+entity SOCIETA {
+    id_societa (id),
+    nome,
+    provincia (optional),
+    regione_provenienza (optional),
+    nazione_provenienza (optional),
+    email_referente (optional),
+    telefono_referente (optional)
+}
+entity SQUADRA {
+    id_squadra (id),
+    nome
+}
+entity CATEGORIA {
+    id_categoria (id),
+    formato_gioco,
+    tipo_categoria
+}
+entity TORNEO {
+    id_torneo (id),
+    nome,
+    data_inizio,
+    data_fine,
+    luogo
+}
+entity ISCRIZIONE {
+    id_iscrizione (id),
+    data_iscrizione,
+    stato,
+    note (optional)
+}
+entity PARTECIPAZIONE {
+    id_partecipazione (id)
+}
+entity TARIFFA {
+    id_tariffa (id),
+    costo,
+    descrizione,
+    formula_roulette (optional)
+}
+entity PERSONA {
+    id_persona (id),
+    nome,
+    cognome
+}
+entity GIOCATORE {
+    data_nascita
+}
+entity GENITORE {
+    grado_parentela
+}
+entity HOTEL {
+    id_hotel (id),
+    nome,
+    indirizzo,
+    distanza,
+    telefono (optional),
+    email (optional)
+}
+entity STANZA {
+    id_stanza (id),
+    numero,
+    posti_letto
+}
+
+/* Relationships */
+relationship CONTENERE (
+    SOCIETA: one..many,
+    SQUADRA: one..one
+)
+relationship GIOCARE_IN (
+    CATEGORIA: one..many,
+    SQUADRA: one..one
+)
+relationship SOTTOPORRE (
+    SQUADRA: zero..many,
+    ISCRIZIONE: one..one
+)
+relationship ISCRIVERE (
+    TORNEO: zero..many,
+    ISCRIZIONE: one..one
+)
+relationship ALLOGGIARE_PRESSO (
+    HOTEL: zero..many,
+    ISCRIZIONE: zero..one
+)
+relationship RISERVARE (
+    ISCRIZIONE: zero..many,
+    STANZA: zero..many
+) {
+    data_inizio,
+    data_fine
+}
+relationship APPARTENERE (
+    HOTEL: one..many,
+    STANZA: one..one
+)
+relationship METTERE_A_DISPOSIZIONE (
+    TORNEO: zero..many,
+    STANZA: zero..many
+)
+relationship COMPONERE_ISCRIZIONE (
+    ISCRIZIONE: zero..many,
+    PARTECIPAZIONE: one..one
+)
+relationship PARTECIPARE_GIOCATORE (
+    GIOCATORE: zero..many,
+    PARTECIPAZIONE: one..one
+)
+relationship SCEGLIERE (
+    TARIFFA: zero..many,
+    PARTECIPAZIONE: one..one
+)
+relationship PROPORRE (
+    TORNEO: zero..many,
+    TARIFFA: one..one
+)
+relationship OCCUPARE_GIOCATORE (
+    STANZA: zero..many,
+    GIOCATORE: zero..many
+) {
+    data_inizio,
+    data_fine
+}
+relationship OCCUPARE_GENITORE (
+    STANZA: zero..many,
+    GENITORE: one..many
+) {
+    data_inizio,
+    data_fine,
+    con_figlio
+}
+
+/* Generalizations */
+PERSONA <= {
+    GIOCATORE,
+    GENITORE
+} (total, exclusive)
