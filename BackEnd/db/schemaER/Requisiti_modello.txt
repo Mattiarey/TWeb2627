@@ -1,14 +1,14 @@
-Il database relazionale deve permettere di memorizzare i dati di diversi tornei, ad ogni torneo possono iscriversi n squadre 
+Il database relazionale deve permettere di memorizzare i dati di diversi tornei, a ogni torneo possono iscriversi n squadre
 Ogni singolo giocatore di ogni squadra può effettuare un'iscrizione singola scegliendo esattamente una tra le tariffe proposte dal torneo.
-	Il controllo che la tariffa dal giocatore sia una tra le proposte dal torneo è svolto dall'operatore e non deve essere garantito dal modello
+	Il controllo che la tariffa dal giocatore sia una tra le proposte dal torneo è svolto dall'operatore e non deve essere garantito dal modello *** non credo sia detto: è comunque collegato al torneo
 il database deve fornire alla richiesta, le stanze dell'hotel disponibili per quel particolare torneo, non è necessario sapere tutte le stanze dell'hotel ma solo quelle fornite dall'hotel stesso per quel particolare torneo.
-I genitori possono accompagnare i figli negli hotel dormendo nelle stanze fornite ma non devono per forza dormire nella loro stessa stanza.
+I genitori possono accompagnare i figli negli hotel dormendo nelle stanze fornite ma non devono per forza dormire nella loro stessa stanza e neanche nello stesso hotel.
 	Non serve conoscere il legame tra padre e figlio, questo viene gestito esternamente.
 Ogni torneo propone delle tariffe proprie ed è possibile che di edizione in edizione queste tariffe cambino.
 I tornei ospitano diverse categorie di squadre e ogni squadra è parte di una società, la quale può avere più squadre.
 Per ogni nuova edizione di un torneo viene creata una nuova squadra e una nuova iscrizione, senza modificare i giocatori delle edizioni passate così da mantenere lo storico.
 Una squadra che pernotta viene assegnata a un solo hotel, e tutte le stanze riservate per quella squadra devono appartenere a quell'hotel.
-è possibile che vengano organizzati più tornei lo stesso anno ma sempre in periodi diversi ed è necessario mantenere la storicità dei giocatori che hanno giocato ai tornei, delle stanze fornite e degli hotel che hanno partecipato a quel determinato torneo.
+È possibile che vengano organizzati più tornei lo stesso anno ma sempre in periodi diversi ed è necessario mantenere la storicità dei giocatori che hanno giocato ai tornei, delle stanze fornite e degli hotel che hanno partecipato a quel determinato torneo.
 Un genitore viene registrato nel sistema soltanto se pernotta in almeno una stanza.
 	Un genitore può specificare la preferenza di voler stare con il figlio per quel pernottamento ma si tratta solo di una preferenza gestita dall'operatore
 
