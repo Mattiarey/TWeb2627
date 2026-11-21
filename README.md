@@ -123,11 +123,11 @@ Al torneo partecipano anche squadre professioniste, ma loro avranno delle tariff
 
 #### Dizionario dei dati (entità)
 | Entità | Descrizione | Attributi | Identificatore |
-
+| :--- | :--- | :--- | :--- |
 
 #### Dizionario dei dati (relazioni)
 | Relazione | Descrizione | Componenti | Attributi |
-
+| :--- | :--- | :--- | :--- |
 ## Progettazione Logica
 
 
