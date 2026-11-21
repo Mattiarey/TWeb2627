@@ -1,5 +1,3 @@
-CREATE DATABASE DB_TORNEO;
-\c DB_TORNEO;
 /* Tables */
 CREATE TABLE SOCIETA (
     id_societa INTEGER NOT NULL,
@@ -23,6 +21,7 @@ CREATE TABLE TORNEO (
     data_inizio INTEGER NOT NULL,
     data_fine INTEGER NOT NULL,
     luogo INTEGER NOT NULL,
+    giornate_giocate INTEGER NOT NULL,
     PRIMARY KEY (id_torneo)
 );
 CREATE TABLE GIOCATORE (
@@ -34,8 +33,6 @@ CREATE TABLE GIOCATORE (
 );
 CREATE TABLE GENITORE (
     id_persona INTEGER NOT NULL,
-    con_figlio INTEGER NOT NULL,
-    grado_parentela INTEGER NOT NULL,
     nome INTEGER NOT NULL,
     cognome INTEGER NOT NULL,
     PRIMARY KEY (id_persona)
@@ -66,6 +63,8 @@ CREATE TABLE ISCRIZIONE (
     id_iscrizione INTEGER NOT NULL,
     data_iscrizione INTEGER NOT NULL,
     stato INTEGER NOT NULL,
+    num_giocatori_previsti INTEGER,
+    num_accompagnatori_previsti INTEGER,
     note INTEGER,
     SQUADRA_id_squadra INTEGER NOT NULL,
     TORNEO_id_torneo INTEGER NOT NULL,
@@ -81,11 +80,24 @@ CREATE TABLE ISCRIZIONE (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
+CREATE TABLE TARIFFA (
+    id_tariffa INTEGER NOT NULL,
+    costo INTEGER NOT NULL,
+    descrizione INTEGER NOT NULL,
+    TORNEO_id_torneo INTEGER NOT NULL,
+    PRIMARY KEY (id_tariffa),
+    FOREIGN KEY (TORNEO_id_torneo) REFERENCES TORNEO (id_torneo)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
 CREATE TABLE PARTECIPAZIONE (
     id_partecipazione INTEGER NOT NULL,
     ISCRIZIONE_id_iscrizione INTEGER NOT NULL,
     GIOCATORE_id_persona INTEGER NOT NULL,
-    TARIFFA_id_tariffa INTEGER,
+    TARIFFA_id_tariffa INTEGER NOT NULL,
+    STANZA_id_stanza INTEGER,
+    data_inizio INTEGER,
+    data_fine INTEGER,
     PRIMARY KEY (id_partecipazione),
     FOREIGN KEY (ISCRIZIONE_id_iscrizione) REFERENCES ISCRIZIONE (id_iscrizione)
     ON DELETE NO ACTION
@@ -95,16 +107,36 @@ CREATE TABLE PARTECIPAZIONE (
     ON UPDATE NO ACTION,
     FOREIGN KEY (TARIFFA_id_tariffa) REFERENCES TARIFFA (id_tariffa)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+    FOREIGN KEY (STANZA_id_stanza) REFERENCES STANZA (id_stanza)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
-CREATE TABLE TARIFFA (
-    id_tariffa INTEGER NOT NULL,
-    costo INTEGER NOT NULL,
-    descrizione INTEGER NOT NULL,
-    formula_roulette INTEGER,
+CREATE TABLE DISPONIBILITA_CAMERE (
+    id_disponibilita INTEGER NOT NULL,
+    tipologia_camera INTEGER NOT NULL,
+    quantita_disponibile INTEGER NOT NULL,
+    HOTEL_id_hotel INTEGER NOT NULL,
     TORNEO_id_torneo INTEGER NOT NULL,
-    PRIMARY KEY (id_tariffa),
+    PRIMARY KEY (id_disponibilita),
+    FOREIGN KEY (HOTEL_id_hotel) REFERENCES HOTEL (id_hotel)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
     FOREIGN KEY (TORNEO_id_torneo) REFERENCES TORNEO (id_torneo)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+CREATE TABLE ASSEGNAZIONE_CAMERE (
+    id_assegnazione INTEGER NOT NULL,
+    tipologia_camera INTEGER NOT NULL,
+    quantita_assegnata INTEGER NOT NULL,
+    ISCRIZIONE_id_iscrizione INTEGER NOT NULL,
+    HOTEL_id_hotel INTEGER NOT NULL,
+    PRIMARY KEY (id_assegnazione),
+    FOREIGN KEY (ISCRIZIONE_id_iscrizione) REFERENCES ISCRIZIONE (id_iscrizione)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+    FOREIGN KEY (HOTEL_id_hotel) REFERENCES HOTEL (id_hotel)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
@@ -115,41 +147,6 @@ CREATE TABLE STANZA (
     HOTEL_id_hotel INTEGER NOT NULL,
     PRIMARY KEY (id_stanza),
     FOREIGN KEY (HOTEL_id_hotel) REFERENCES HOTEL (id_hotel)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-);
-CREATE TABLE RISERVARE (
-    ISCRIZIONE_id_iscrizione INTEGER NOT NULL,
-    STANZA_id_stanza INTEGER NOT NULL,
-    PRIMARY KEY (ISCRIZIONE_id_iscrizione, STANZA_id_stanza),
-    FOREIGN KEY (ISCRIZIONE_id_iscrizione) REFERENCES ISCRIZIONE (id_iscrizione)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    FOREIGN KEY (STANZA_id_stanza) REFERENCES STANZA (id_stanza)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-);
-CREATE TABLE METTERE_A_DISPOSIZIONE (
-    TORNEO_id_torneo INTEGER NOT NULL,
-    STANZA_id_stanza INTEGER NOT NULL,
-    PRIMARY KEY (TORNEO_id_torneo, STANZA_id_stanza),
-    FOREIGN KEY (TORNEO_id_torneo) REFERENCES TORNEO (id_torneo)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    FOREIGN KEY (STANZA_id_stanza) REFERENCES STANZA (id_stanza)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-);
-CREATE TABLE OCCUPARE_GIOCATORE (
-    GIOCATORE_id_persona INTEGER NOT NULL,
-    STANZA_id_stanza INTEGER NOT NULL,
-    data_inizio INTEGER NOT NULL,
-    data_fine INTEGER NOT NULL,
-    PRIMARY KEY (GIOCATORE_id_persona, STANZA_id_stanza),
-    FOREIGN KEY (GIOCATORE_id_persona) REFERENCES GIOCATORE (id_persona)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    FOREIGN KEY (STANZA_id_stanza) REFERENCES STANZA (id_stanza)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );

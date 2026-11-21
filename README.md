@@ -85,7 +85,7 @@ Al torneo partecipano anche squadre professioniste, ma loro avranno delle tariff
 
 ---
 ### Schema ER
-![Disegno schema ER](./BackEnd/db/SchemaER.png)
+![Disegno schema ER](BackEnd/db/schemaER-copia.png)
 
 #### Scelte progettuali
 1. Ogni singolo giocatore di ogni squadra può effettuare un'iscrizione singola scegliendo esattamente una tra le tariffe proposte dal torneo.
