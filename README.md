@@ -121,6 +121,12 @@ Al torneo partecipano anche squadre professioniste, ma loro avranno delle tariff
 17. Quanto paga in totale una società per un torneo è la somma delle tariffe scelte da tutti i giocatori delle sue squadre iscritte a quel torneo.
 18. La categoria della squadra deve tornare col torneo, e se c'è formula_roulette sulla tariffa va applicata la sua logica.
 
+#### Dizionario dei dati (entità)
+| Entità | Descrizione | Attributi | Identificatore |
+
+
+#### Dizionario dei dati (relazioni)
+| Relazione | Descrizione | Componenti | Attributi |
 
 ## Progettazione Logica
 
