@@ -124,10 +124,41 @@ Al torneo partecipano anche squadre professioniste, ma loro avranno delle tariff
 #### Dizionario dei dati (entità)
 | Entità | Descrizione | Attributi | Identificatore |
 | :--- | :--- | :--- | :--- |
+| torneo | Base di tutto il database; rappresenta la singola edizione dell'evento sportivo | nome, data_inizio, data_fine, luogo | id_torneo |
+| societa | Iscrive una o più squadre al torneo | nome, provincia (opzionale), regione_provenienza (opzionale), nazione_provenienza (opzionale), email_referente (opzionale), telefono_referente (opzionale) | id_societa |
+| squadra | Singola formazione appartenente a una società e associata a una specifica categoria | nome | id_squadra |
+| categoria | Fascia d'età e formato di gioco in cui competono le squadre | formato_gioco, tipo_categoria | id_categoria |
+| iscrizione | Rappresenta la partecipazione di una squadra a un torneo, comprensiva dei conteggi provvisori per la logistica | data_iscrizione, stato, num_giocatori_previsti (opzionale), num_accompagnatori_previsti (opzionale), note (opzionale) | id_iscrizione |
+| partecipazione | Rappresenta la conferma di un singolo giocatore in una specifica iscrizione di squadra |  | id_partecipazione |
+| tariffa | Quota economica proposta da un torneo per coprire iscrizione e/o soggiorno del giocatore ed eventuale genitore | costo, descrizione | id_tariffa |
+| persona | Generalizzazione che raccoglie i dati anagrafici comuni a giocatori e genitori | nome, cognome | id_persona |
+| giocatore | Sottotipo di persona che identifica l'atleta partecipante alle gare | data_nascita *(oltre a nome e cognome ereditati da persona)* | id_persona *(ereditato da persona)* |
+| genitore | Sottotipo di persona che identifica l'accompagnatore registrato esclusivamente per il pernottamento in hotel | | id_persona *(ereditato da persona)* |
+| hotel | Struttura convenzionata che ospita le squadre e i genitori durante il torneo | nome, indirizzo, distanza, telefono (opzionale), email (opzionale) | id_hotel |
+| disponibilita_camere | Quantità di camere per tipologia che un hotel mette a disposizione per una specifica edizione del torneo | tipologia_camera, quantita_disponibile | id_disponibilita |
+| assegnazione_camere | Ripartizione delle camere per tipologia assegnate a una squadra in un hotel prima di conoscere i nominativi | tipologia_camera, quantita_assegnata | id_assegnazione |
+| stanza | Singola camera fisica all'interno di un hotel, in cui vengono inseriti giocatori e genitori | posti_letto, tipologia | id_stanza |
+
 
 #### Dizionario dei dati (relazioni)
 | Relazione | Descrizione | Componenti | Attributi |
 | :--- | :--- | :--- | :--- |
+| contenere | Associa ogni squadra alla società sportiva di appartenenza | societa (1,N), squadra (1,1) |  |
+| giocare_in | Definisce la categoria di appartenenza di ciascuna squadra | categoria (1,N), squadra (1,1) |  |
+| sottoporre | Collega una squadra alle iscrizioni effettuate nelle varie edizioni dei tornei | squadra (0,N), iscrizione (1,1) |  |
+| iscrivere | Associa ciascuna iscrizione al torneo di riferimento | torneo (0,N), iscrizione (1,1) |  |
+| alloggiare_presso | Assegna una squadra iscritta a un unico hotel per l'intera durata del torneo | hotel (0,N), iscrizione (0,1) |  |
+| offrire_disponibilita | Collega un hotel al numero di camere offerte per tipologia | hotel (0,N), disponibilita_camere (1,1) |  |
+| riguardare_torneo | Associa ciascuna disponibilità di camere all'edizione del torneo per cui è offerta | torneo (0,N), disponibilita_camere (1,1) |  |
+| ricevere_assegnazione | Collega un'iscrizione ai blocchi quantitativi di camere per tipologia assegnati alla squadra | iscrizione (0,N), assegnazione_camere (1,1) |  |
+| assegnazione_presso_hotel | Specifica presso quale struttura alberghiera vengono assegnate le camere alla squadra | hotel (0,N), assegnazione_camere (1,1) |  |
+| appartenere | Lega ciascuna camera fisica numerata all'hotel in cui si trova | hotel (1,N), stanza (1,1) |  |
+| componere_iscrizione | Associa le singole partecipazioni dei giocatori all'iscrizione della propria squadra | iscrizione (0,N), partecipazione (1,1) |  |
+| partecipare_giocatore | Collega l'anagrafica del giocatore alle sue singole partecipazioni ai tornei | giocatore (0,N), partecipazione (1,1) |  |
+| scegliere | Associa alla partecipazione di un giocatore la tariffa scelta per quel torneo | tariffa (0,N), partecipazione (1,1) |  |
+| proporre | Definisce quali tariffe sono disponibili per ciascuna edizione del torneo | torneo (0,N), tariffa (1,1) |  |
+| occupare_giocatore | Registra un giocatore iscritto a una specifica camera dell'hotel | stanza (0,N), partecipazione (0,1) | data_inizio, data_fine |
+| occupare_genitore | Registra un genitore a una specifica camera dell'hotel | stanza (0,N), genitore (1,N) | data_inizio, data_fine, con_figlio |
 ## Progettazione Logica
 
 
